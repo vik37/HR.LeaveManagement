@@ -1,8 +1,13 @@
 name: CI Check on PR to Main
 
 on:
+    push:
+      branches:
+        - feature
+        - main
     pull_request:
-      branches: 
+      branches:
+        - feature/*
         - main
 
 jobs:
