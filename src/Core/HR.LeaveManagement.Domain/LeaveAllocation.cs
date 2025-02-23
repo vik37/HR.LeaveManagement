@@ -1,6 +1,4 @@
-﻿
-
-namespace HR.LeaveManagement.Domain;
+﻿namespace HR.LeaveManagement.Domain;
 
 public class LeaveAllocation : BaseEntity
 {
