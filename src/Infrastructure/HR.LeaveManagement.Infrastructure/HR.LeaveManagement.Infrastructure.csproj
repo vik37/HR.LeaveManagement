@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\Core\HR.LeaveManager.Application\HR.LeaveManager.Application.csproj" />
+    <ProjectReference Include="..\..\Core\HR.LeaveManager.Application\HR.LeaveManager.Application.csproj" />
   </ItemGroup>
 
 </Project>
