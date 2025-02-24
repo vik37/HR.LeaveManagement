@@ -1,4 +1,4 @@
-﻿using HR.LeaveManager.Application.Contracts.Exceptions;
+﻿using HR.LeaveManager.Application.Exceptions;
 using HR.LeaveManager.Application.Contracts.Persistence;
 using MediatR;
 
