@@ -1,6 +1,6 @@
 ﻿using FluentValidation.Results;
 
-namespace HR.LeaveManager.Application.Contracts.Exceptions;
+namespace HR.LeaveManager.Application.Exceptions;
 
 public class BadRequestException : Exception
 {
