@@ -5,7 +5,6 @@ using HR.LeaveManager.Application.Feature.LeaveType.Queries.GetAllLeaveTypes;
 using HR.LeaveManager.Application.Feature.LeaveType.Queries.GetLeaveTypeDetail;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace HR.LeaveManagement.Api.Controllers
 {
