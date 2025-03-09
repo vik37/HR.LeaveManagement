@@ -65,6 +65,7 @@ public class ExceptionMiddleware
 				break;
 		}
 
+		context.Response.ContentType = "application/json";
 		context.Response.StatusCode = (int)httpStatusCode;
 		string json = JsonConvert.SerializeObject(problem);
 		await context.Response.WriteAsync(json);
