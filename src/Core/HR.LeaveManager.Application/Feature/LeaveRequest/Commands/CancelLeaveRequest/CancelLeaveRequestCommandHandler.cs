@@ -41,6 +41,7 @@ public class CancelLeaveRequestCommandHandler : IRequestHandler<CancelLeaveReque
 				Body = $"Your leave requests for {leaveRequest.StartDate:D} to {leaveRequest.EndDate:D} has been cancelled.",
 				Subject = "Leave Request Cancelled"
 			};
+
 			await _emailSender.SendEmail(email);
 		}
 		catch (Exception ex)
