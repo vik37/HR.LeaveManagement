@@ -29,6 +29,7 @@ public class UpdateLeaveAllocationCommandHandler : IRequestHandler<UpdateLeaveAl
 			throw new BadRequestException("Invalid Leave Allocation", validationResult);
 
 		var leaveAllocation = await _leaveAllocationRepository.GetByIdAsync(request.Id);
+
 		if (leaveAllocation is null)
 			throw new NotFoundException(nameof(LeaveAllocation), request.Id);
 
