@@ -38,7 +38,6 @@ public class UpdateLeaveTypeCommandValidator : AbstractValidator<UpdateLeaveType
 		return true;
 	}
 	
-
 	public async Task<bool> LeaveTypeMustExists(int id, CancellationToken token)
 	{
 		var leaveType = await _leaveTypeRepository.GetByIdAsync(id);
