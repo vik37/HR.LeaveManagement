@@ -69,6 +69,5 @@ public class ExceptionMiddleware
 		context.Response.StatusCode = (int)httpStatusCode;
 		string json = JsonConvert.SerializeObject(problem);
 		await context.Response.WriteAsync(json);
-
 	}
 }
