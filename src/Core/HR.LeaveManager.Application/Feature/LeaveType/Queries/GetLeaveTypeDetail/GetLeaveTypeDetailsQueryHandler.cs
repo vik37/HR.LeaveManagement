@@ -17,7 +17,6 @@ public class GetLeaveTypeDetailsQueryHandler : IRequestHandler<GetLeaveTypeDetai
 	{
 		_mapper = mapper;
 		_leaveTypeRepository = leaveTypeRepository;
-		_logger = logger;
 	}
 
 	public async Task<LeaveTypeDetailsDto> Handle(GetLeaveTypeDetailsQuery request, CancellationToken cancellationToken)

@@ -9,13 +9,13 @@ public class CreateLeaveTypeCommandValidator : AbstractValidator<CreateLeaveType
 	public CreateLeaveTypeCommandValidator(ILeaveTypeRepository leaveTypeRepository)
 	{
 		RuleFor(x => x.Name)
-			.NotEmpty().WithMessage("{PropertyName} is required")
+			.Empty().WithMessage("{PropertyName} is required")
 			.NotNull()
 			.MaximumLength(70).WithMessage("{PropertyName}  must be fewer than 70 characters");
 
 		RuleFor(x => x.DefaultDays)
-			.LessThan(100).WithMessage("{PropertyName} cannot exceed 100")
-			.GreaterThan(1).WithMessage("{PropertyName} cannot be less than 1");
+			.GreaterThan(100).WithMessage("{PropertyName} cannot exceed 100")
+			.LessThan(1).WithMessage("{PropertyName} cannot be less than 1");
 
 		RuleFor(q => q)
 			.MustAsync(LeaveTypeNameUnique)
