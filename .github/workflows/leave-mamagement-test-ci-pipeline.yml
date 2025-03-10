@@ -1,0 +1,35 @@
+name: CI Test on PR to Main
+
+on:
+  push:
+    branches:
+      - main
+      - feature
+      - tests/*
+  pull_request:
+    branches:
+      - main
+      - feature
+      - tests/*
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Install dependencies
+        run: dotnet restore
+      - name: Run tests
+        run: dotnet test --configuration Release --no-restore --logger "trx;LogFileName=test_results.trx"
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: |
+            ./HR.LeaveManagement/test/HR.LeaveManagement.Application.UnitTest/test_results.trx
