@@ -40,6 +40,7 @@ public class GetLeaveTypeDetailsQueryHandlerTests
 
 		result.DefaultDays.ShouldBe(15);
 		result.Name.ShouldEndWith("Sick");
+		result.Name.ShouldNotBeNullOrEmpty();
 		result.Id.ShouldBe(id);
 	}
 
