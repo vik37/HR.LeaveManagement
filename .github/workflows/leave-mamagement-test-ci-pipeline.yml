@@ -12,6 +12,11 @@ on:
       - feature
       - tests/*
 
+permissions:
+  contents: read
+  actions: read
+  checks: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -35,19 +40,35 @@ jobs:
         run: find . -type f      
 
       - name: Run unit tests with report
-        run: dotnet test ./test/HR.LeaveManagement.Application.UnitTest/HR.LeaveManagement.Application.UnitTest.csproj --configuration Release --no-build --logger "trx;LogFileName=./HR.LeaveManagement/test/HR.LeaveManagement.Application.UnitTest/TestResults/UnitTestResults.trx"
+        run: dotnet test ./test/HR.LeaveManagement.Application.UnitTest/HR.LeaveManagement.Application.UnitTest.csproj --configuration Release --no-build --logger "trx;LogFileName=TestResults.trx"
 
-      - name: Upload test results
+      - name: Upload unit test results
         uses: actions/upload-artifact@v4
         with:
-          name: TestResults
-          path: ./test/UnitTestResults/UnitTestResults.trx
+          name: UnitTestResults
+          path: ./test/HR.LeaveManagement.Application.UnitTest/TestResults/TestResults.trx
+
+      - name: Report Unit Test Results to GitHub UI
+        uses: dorny/test-reporter@v1
+        with:
+          name: Unit Test Results
+          path: ./test/HR.LeaveManagement.Application.UnitTest/TestResults/TestResults.trx
+          reporter: dotnet-trx  # Use dotnet-trx parser
+          fail-on-error: false  # Prevents workflow failure if file is missing
 
       - name: Run integration tests with report
-        run: dotnet test ./test/HR.LeaveManagement.Persistence.IntegrationTests/HR.LeaveManagement.Persistence.IntegrationTests.csproj --configuration Release --no-build --logger "trx;LogFileName=./HR.LeaveManagement/test/HR.LeaveManagement.Persistence.IntegrationTests/TestResults/IntegrationTestResults.trx"
+        run: dotnet test ./test/HR.LeaveManagement.Persistence.IntegrationTests/HR.LeaveManagement.Persistence.IntegrationTests.csproj --configuration Release --no-build --logger "trx;LogFileName=TestResults.trx"
   
-      - name: Upload test results
+      - name: Upload integration test results
         uses: actions/upload-artifact@v4
         with:
-          name: TestResults
-          path: ./test/UnitTestResults/IntegrationTestResults.trx
+          name: IntegrationTestResults
+          path: ./test/HR.LeaveManagement.Persistence.IntegrationTests/TestResults/TestResults.trx
+
+      - name: Report Integration Test Results to GitHub UI
+        uses: dorny/test-reporter@v1
+        with:
+          name: Integration Test Results
+          path: ./test/HR.LeaveManagement.Persistence.IntegrationTests/TestResults/TestResults.trx
+          reporter: dotnet-trx
+          fail-on-error: false
