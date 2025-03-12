@@ -33,7 +33,7 @@ jobs:
 
       - name: Debug Test Output Paths
         run: find . -type f      
-
+        
       - name: Run unit tests with report
         run: dotnet test ./test/HR.LeaveManagement.Application.UnitTest/HR.LeaveManagement.Application.UnitTest.csproj --configuration Release --no-build --logger "trx;LogFileName=UnitTestResults.trx"
 
