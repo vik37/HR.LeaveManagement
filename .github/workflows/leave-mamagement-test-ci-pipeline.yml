@@ -1,4 +1,4 @@
-name: CI Test on PR to Main
+name: CI HR Leave Management Tests
 
 on:
   push:
@@ -13,23 +13,38 @@ on:
       - tests/*
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
+
       - name: Setup dotnet
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.0.x'
+          dotnet-version: '8.x'
+
       - name: Install dependencies
-        run: dotnet restore
-      - name: Run tests
-        run: dotnet test --configuration Release --no-restore --logger "trx;LogFileName=test_results.trx"
+        run: dotnet restore ./HR.LeaveManagement.Core.sln
+
+      - name: Build the solution
+        run: dotnet build ./HR.LeaveManagement.Core.sln --configuration Release --no-restore
+
+      - name: Run unit tests with report
+        run: dotnet test ./test/HR.LeaveManagement.Application.UnitTest/HR.LeaveManagement.Application.UnitTest.csproj --configuration Release --no-build --logger "trx;LogFileName=UnitTestResults.trx"
+
       - name: Upload test results
         uses: actions/upload-artifact@v4
         with:
-          name: test-results
-          path: |
-            ./HR.LeaveManagement/test/HR.LeaveManagement.Application.UnitTest/test_results.trx
+          name: TestResults
+          path: ./test/UnitTestResults/UnitTestResults.trx
+
+      - name: Run integration tests with report
+        run: dotnet test ./test/HR.LeaveManagement.Persistence.IntegrationTests/HR.LeaveManagement.Persistence.IntegrationTests.csproj --configuration Release --no-build --logger "trx;LogFileName=IntegrationTestResults.trx"
+  
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        with:
+          name: TestResults
+          path: ./test/UnitTestResults/IntegrationTestResults.trx
