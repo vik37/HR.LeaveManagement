@@ -1,0 +1,50 @@
+name: CI HR Leave Management Tests
+
+on:
+  push:
+    branches:
+      - main
+      - feature
+      - tests/*
+  pull_request:
+    branches:
+      - main
+      - feature
+      - tests/*
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x'
+
+      - name: Install dependencies
+        run: dotnet restore ./HR.LeaveManagement.Core.sln
+
+      - name: Build the solution
+        run: dotnet build ./HR.LeaveManagement.Core.sln --configuration Release --no-restore
+
+      - name: Run unit tests with report
+        run: dotnet test ./test/HR.LeaveManagement.Application.UnitTest/HR.LeaveManagement.Application.UnitTest.csproj --configuration Release --no-build --logger "trx;LogFileName=UnitTestResults.trx"
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        with:
+          name: TestResults
+          path: ./test/UnitTestResults/UnitTestResults.trx
+
+      - name: Run integration tests with report
+        run: dotnet test ./test/HR.LeaveManagement.Persistence.IntegrationTests/HR.LeaveManagement.Persistence.IntegrationTests.csproj --configuration Release --no-build --logger "trx;LogFileName=IntegrationTestResults.trx"
+  
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        with:
+          name: TestResults
+          path: ./test/UnitTestResults/IntegrationTestResults.trx
