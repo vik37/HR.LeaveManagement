@@ -32,4 +32,5 @@ jobs:
         with:
           name: test-results
           path: |
-            ./HR.LeaveManagement/test/HR.LeaveManagement.Application.UnitTest/test_results.trx
+            ./test/HR.LeaveManagement.Application.UnitTest/test_results.trx
+            ./test/HR.LeaveManagement.Persistence.IntegrationTests/test_results.trx
