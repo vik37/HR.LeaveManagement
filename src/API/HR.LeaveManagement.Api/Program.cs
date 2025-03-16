@@ -3,6 +3,7 @@ using HR.LeaveManagement.Infrastructure;
 using HR.LeaveManagement.Persistence;
 using Newtonsoft.Json.Serialization;
 using HR.LeaveManagement.Api.Middleware;
+using HR.LeaveManagement.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +21,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddPersistenceServices(builder.Configuration);
+builder.Services.AddIdentityServices(builder.Configuration);
 
 builder.Services.AddCors(options =>
 {
@@ -44,6 +46,7 @@ app.UseHttpsRedirection();
 
 app.UseCors("all");
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
