@@ -2,7 +2,7 @@
 using HR.LeaveManagement.Infrastructure.Logging;
 using HR.LeaveManager.Application.Contracts.Email;
 using HR.LeaveManager.Application.Contracts.Logging;
-using HR.LeaveManager.Application.Models;
+using HR.LeaveManager.Application.Models.Emails;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
