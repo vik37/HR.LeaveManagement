@@ -1,10 +1,8 @@
-﻿using AutoMapper;
-using HR.LeaveManager.Application.Contracts.Email;
+﻿using HR.LeaveManager.Application.Contracts.Email;
 using HR.LeaveManager.Application.Contracts.Logging;
 using HR.LeaveManager.Application.Contracts.Persistence;
 using HR.LeaveManager.Application.Exceptions;
-using HR.LeaveManager.Application.Feature.LeaveRequest.Commands.CreateLeaveRequest;
-using HR.LeaveManager.Application.Models;
+using HR.LeaveManager.Application.Models.Emails;
 using MediatR;
 
 namespace HR.LeaveManager.Application.Feature.LeaveRequest.Commands.ChangeLeaveRequestApproval;
@@ -39,7 +37,6 @@ public class ChangeLeaveRequestApprovalCommandHandler : IRequestHandler<ChangeLe
 		// If request is approved, get and update the employee's allocations
 
 		// Send Confirmation Email
-		// Send confirmation email
 		try
 		{
 			var email = new EmailMessage
