@@ -2,6 +2,15 @@
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, HR!</h1>
+<h1>Hello, HR Management!</h1>
 
-Welcome to your new app.
+<AuthorizeView>
+    <Authorized>
+        <button class="btn btn-danger" @onclick="Logout"><i class="bi bi-door-open-fill"></i> Logout</button>
+    </Authorized>
+    <NotAuthorized>
+        <button class="btn btn-success" @onclick="GotToLogin"><i class="bi bi-arrow-left-square-fill"></i> Login</button>
+        ||
+        <button class="btn btn-primary" @onclick="GotToRegister"><i class="bi bi-r-square-fill"></i> Register</button>
+    </NotAuthorized>
+</AuthorizeView>

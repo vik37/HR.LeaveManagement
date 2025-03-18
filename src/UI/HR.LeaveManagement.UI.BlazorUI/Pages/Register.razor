@@ -1,0 +1,48 @@
+﻿@page "/register"
+
+<h3>Register</h3>
+
+
+@if (string.IsNullOrEmpty(Message) == false)
+{
+    <div class="alert alert-danger">
+        @Message
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <EditForm Model="@Model" OnValidSubmit="HandleRegister">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="form-group">
+                <label class="control-label">Firstname</label>
+                <InputText id="userName" class="form-control" @bind-Value="@Model.Firstname"></InputText>
+                <ValidationMessage For="@(() => Model.Firstname)" />
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Lastname</label>
+                <InputText id="userName" class="form-control" @bind-Value="@Model.Lastname"></InputText>
+                <ValidationMessage For="@(() => Model.Lastname)" />
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Email</label>
+                <InputText id="userName" class="form-control" @bind-Value="@Model.Email"></InputText>
+                <ValidationMessage For="@(() => Model.Email)" />
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Password</label>
+                <InputText type="password" id="password" class="form-control" @bind-Value="@Model.Password"></InputText>
+                <ValidationMessage For="@(() => Model.Password)"></ValidationMessage>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Register" class="btn btn-primary" />
+            </div>
+
+        </EditForm>
+    </div>
+</div>

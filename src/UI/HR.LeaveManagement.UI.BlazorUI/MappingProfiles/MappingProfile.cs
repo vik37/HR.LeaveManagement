@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using HR.LeaveManagement.UI.BlazorUI.Models;
+using HR.LeaveManagement.UI.BlazorUI.Models.LeaveTypes;
 using HR.LeaveManagement.UI.BlazorUI.Services.Base;
 
 namespace HR.LeaveManagement.UI.BlazorUI.MappingProfiles;
