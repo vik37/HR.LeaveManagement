@@ -1,5 +1,6 @@
 ﻿using Blazored.LocalStorage;
 using HR.LeaveManagement.UI.BlazorUI.Contracts;
+using HR.LeaveManagement.UI.BlazorUI.Models;
 using HR.LeaveManagement.UI.BlazorUI.Providers;
 using HR.LeaveManagement.UI.BlazorUI.Services.Base;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -39,10 +40,10 @@ namespace HR.LeaveManagement.UI.BlazorUI.Services
 			}
 		}
 
-		public async Task<bool> Registerasync(string firstname, string lastname, string username, string email, string password)
+		public async Task<bool> RegisterAsync(RegisterVM register)
 		{
-			var registerRequest = new RegisterRequest { Firstname = firstname, Lastname = lastname, 
-				Username = username, Email = email,	Password = password };
+			var registerRequest = new RegisterRequest { Firstname = register.Firstname, Lastname = register.Lastname, 
+				Username = register.Email, Email = register.Email, Password = register.Password };
 
 			var response = await _client.RegisterAsync(registerRequest);
 
