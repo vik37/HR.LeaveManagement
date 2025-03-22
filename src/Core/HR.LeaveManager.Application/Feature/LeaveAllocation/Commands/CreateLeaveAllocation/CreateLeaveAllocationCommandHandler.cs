@@ -6,7 +6,7 @@ using MediatR;
 
 namespace HR.LeaveManager.Application.Feature.LeaveAllocation.Commands.CreateLeaveAllocation;
 
-public class CreateLeaveAllocationCommandHandler : IRequestHandler<CreateLeaveAllocationCommand, int>
+public class CreateLeaveAllocationCommandHandler : IRequestHandler<CreateLeaveAllocationCommand, Unit>
 {
 	private readonly ILeaveAllocationRepository _leaveAllocationRepository;
 	private readonly ILeaveTypeRepository _leaveTypeRepository;
@@ -23,7 +23,7 @@ public class CreateLeaveAllocationCommandHandler : IRequestHandler<CreateLeaveAl
 		_userService = userService;
 	}
 
-	public async Task<int> Handle(CreateLeaveAllocationCommand request, CancellationToken cancellationToken)
+	public async Task<Unit> Handle(CreateLeaveAllocationCommand request, CancellationToken cancellationToken)
 	{
 		var validator = new CreateLeaveAllocationCommandValidator(_leaveTypeRepository);
 		var validationResult = await validator.ValidateAsync(request);
@@ -60,9 +60,6 @@ public class CreateLeaveAllocationCommandHandler : IRequestHandler<CreateLeaveAl
 		if(allocations.Any())
 			await _leaveAllocationRepository.AddAllocation(allocations);
 
-		var leaveAllocation = _mapper.Map<LeaveManagement.Domain.LeaveAllocation>(request);
-
-		await _leaveAllocationRepository.CreateAsync(leaveAllocation);
-		return leaveAllocation.Id;
+		return Unit.Value;
 	}
 }

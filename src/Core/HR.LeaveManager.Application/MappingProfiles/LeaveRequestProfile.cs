@@ -13,7 +13,7 @@ public class LeaveRequestProfile : Profile
 	{
 		CreateMap<LeaveRequestListDto, LeaveRequest>().ReverseMap();
 		CreateMap<LeaveRequest, LeaveRequestDetailsDto>();
-		CreateMap<CreateLeaveRequestCommand, LeaveAllocation>();
-		CreateMap<UpdateLeaveRequestCommand, LeaveAllocation>();
+		CreateMap<CreateLeaveRequestCommand, LeaveRequest>();
+		CreateMap<UpdateLeaveRequestCommand, LeaveRequest>();
 	}
 }
