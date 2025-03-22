@@ -8,6 +8,7 @@ using System.Reflection;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using HR.LeaveManagement.UI.BlazorUI.Providers;
+using HR.LeaveManagement.UI.BlazorUI.Handler;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -15,7 +16,9 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 //builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
-builder.Services.AddHttpClient<IClient, Client>(client => client.BaseAddress = new Uri("https://localhost:7217"));
+builder.Services.AddTransient<JwtAuthorizationMessageHandler>();
+builder.Services.AddHttpClient<IClient, Client>(client => client.BaseAddress = new Uri("https://localhost:7217"))
+	.AddHttpMessageHandler<JwtAuthorizationMessageHandler>();
 
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddAuthorizationCore();

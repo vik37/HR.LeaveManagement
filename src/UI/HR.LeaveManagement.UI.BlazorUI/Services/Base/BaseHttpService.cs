@@ -26,11 +26,4 @@ public class BaseHttpService
 				return new Response<Guid> { Message = "Something went wrong, please try again later", Success = false };
 		}
 	}
-
-	protected async Task AddBearerToken()
-	{
-		if (await _localStorageService.ContainKeyAsync("token"))
-			_client.HttpClient.DefaultRequestHeaders.Authorization =
-				new AuthenticationHeaderValue("Bearer", await _localStorageService.GetItemAsync<string>("token"));
-	}
 }
