@@ -6,6 +6,94 @@
     <a href="/leaverequests/create" class="btn btn-success">Add Leave Request</a>
 </div>
 
+<div class="row">
+    <div class="col-md-3">
+        <div class="card text-white bg-info" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Total Requests</h5>
+                <p class="card-text">@AdminLeaveRequestVM.TotalRequests</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-warning" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Pending Requests</h5>
+                <p class="card-text">@AdminLeaveRequestVM.PendingRequests</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-success" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Approved Requests</h5>
+                <p class="card-text">@AdminLeaveRequestVM.ApprovedRequests</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-danger" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Rejected Requests</h5>
+                <p class="card-text">@AdminLeaveRequestVM.RejectedRequests</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br />
+<br />
+
+<hr />
+<h1>Leave Request Log</h1>
+<hr />
+<table id="tblData" class="table">
+    <thead>
+        <tr>
+            <th>Employee Name</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Leave Type</th>
+            <th>Requested Date</th>
+            <th>Approval Status</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var request in AdminLeaveRequestVM.LeaveRequests)
+        {
+            <tr>
+                <td>@request.Employee.Firstname @request.Employee.Lastname</td>
+                <td>@request.StartDate.ToShortDateString()</td>
+                <td>@request.EndDate.ToShortDateString()</td>
+                <td>@request.LeaveType.Name</td>
+                <td>@request.DateRequest.ToShortDateString()</td>
+                <td>
+                    @if (request.Cancelled)
+                    {
+                        <span class="badge bg-secondary">Cancelled</span>
+                    }
+                    else if(request.Approved == true)
+                    {
+                        <span class="badge bg-success">Approved</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-warning">Pending</span>
+                    }
+                </td>
+                <td>
+                    @if (!request.Cancelled)
+                    {
+                        <button class="btn btn-outline-primary" @onclick="(() =>GoToDetails(request.Id))">
+                            <span class="p-1"><i class="bi bi-file-earmark-fill"></i> <b>Review</b></span>
+                        </button>
+                    }
+                </td>
+            </tr>   
+        }
+    </tbody>
+</table>
 @code {
 
 }

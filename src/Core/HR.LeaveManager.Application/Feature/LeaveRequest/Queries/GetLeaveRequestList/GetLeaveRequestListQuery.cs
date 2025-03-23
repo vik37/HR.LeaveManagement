@@ -2,4 +2,4 @@
 
 namespace HR.LeaveManager.Application.Feature.LeaveRequest.Queries.GetLeaveRequestList;
 
-public record GetLeaveRequestListQuery : IRequest<List<LeaveRequestListDto>>;
+public record GetLeaveRequestListQuery(bool IsLoggedInUser) : IRequest<List<LeaveRequestListDto>>;

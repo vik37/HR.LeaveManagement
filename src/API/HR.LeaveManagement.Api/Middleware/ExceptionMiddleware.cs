@@ -54,6 +54,16 @@ public class ExceptionMiddleware
 					Type = nameof(NotFoundException),
 				};
 				break;
+			case ForBiddenException forBiddenException:
+				httpStatusCode = HttpStatusCode.Forbidden;
+				problem = new CustomProblemDetails
+				{
+					Title = "Not allowed",
+					Status = (int)httpStatusCode,
+					Detail = forBiddenException.Message,
+					Type = nameof(ForBiddenException)
+				};
+				break;
 			default:
 				problem = new CustomProblemDetails
 				{

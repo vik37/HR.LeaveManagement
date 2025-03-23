@@ -25,16 +25,16 @@ namespace HR.LeaveManagement.Api.Controllers
 
 		// GET: api/<LeaveRequestController>
 		[HttpGet]
-		public async Task<ActionResult<List<LeaveRequestListDto>>> Get()
+		public async Task<ActionResult<List<LeaveRequestListDto>>> Get([FromQuery] bool isLoggedInUser = false)
 		{
-			var leaveAllocations = await _mediator.Send(new GetLeaveRequestListQuery());
+			var leaveAllocations = await _mediator.Send(new GetLeaveRequestListQuery(isLoggedInUser));
 
 			return Ok(leaveAllocations);
 		}
 
 		// GET api/<LeaveRequestController>/5
 		[HttpGet("{id}")]
-		public async Task<ActionResult<LeaveRequestDetailsDto>> Get(int id)
+		public async Task<ActionResult<LeaveRequestDetailsDto>> Get([FromRoute] int id)
 		{
 			var leaveAllocationDetails = await _mediator.Send(new GetLeaveRequestDetailsQuery(id));
 
@@ -93,7 +93,7 @@ namespace HR.LeaveManagement.Api.Controllers
 		[ProducesResponseType(StatusCodes.Status204NoContent)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesDefaultResponseType]
-		public async Task<ActionResult> Delete(int id)
+		public async Task<ActionResult> Delete([FromRoute]int id)
 		{
 			await _mediator.Send(new DeleteLeaveRequestCommand { Id = id });
 			return NoContent();
