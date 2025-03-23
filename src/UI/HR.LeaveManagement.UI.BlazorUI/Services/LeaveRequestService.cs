@@ -15,9 +15,20 @@ public class LeaveRequestService : BaseHttpService, ILeaveRequestService
 		_mapper = mapper;
 	}
 
-	public Task<AdminLeaveRequestVM> GetAdminLeaveRequestList()
+	public async Task<AdminLeaveRequestVM> GetAdminLeaveRequestList()
 	{
-		throw new NotImplementedException();
+		var leaveRequests = await _client.LeaveRequestAllAsync(isLoggedInUser: false);
+
+		var model = new AdminLeaveRequestVM
+		{
+			TotalRequests = leaveRequests.Count,
+			ApprovedRequests = leaveRequests.Count(q => q.Approval == true),
+			PendingRequests = leaveRequests.Count(q => q.Approval == null),
+			RejectedRequests = leaveRequests.Count(q => q.Approval == false),
+			LeaveRequests = _mapper.Map<List<LeaveRequestVM>>(leaveRequests)
+		};
+
+		return model;	
 	}
 
 	public Task<EmployeeLeaveRequestVM> GetEmployeeLeaveRequestList()
