@@ -7,8 +7,9 @@ public interface ILeaveRequestService
 {
 	Task<AdminLeaveRequestVM> GetAdminLeaveRequestList();
 	Task<EmployeeLeaveRequestVM> GetEmployeeLeaveRequestList();
-	Task<Response<Guid>> CreateLeaveRequest(LeaveRequestVM request);
-	Task<LeaveRequestVM> GetLeaveRequest(int id);
+	Task<LeaveRequestVM> GetLeaveRequest(int id);	
 	Task DeleteLeaveRequest(int id);
-	Task ApproveLeaveRequest(int id, bool approval);
+	Task<Response<Guid>> CreateLeaveRequest(LeaveRequestVM request);
+	Task<Response<Guid>> ApproveLeaveRequest(int id, bool approval);
+	Task<Response<Guid>> CancleLeaveRequest(int id);
 }
