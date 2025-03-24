@@ -1,4 +1,59 @@
-﻿<h3>Details</h3>
+﻿@page "/leaverequests/details/{id:int}"
+
+<h3>Details</h3>
+
+@if (loaded)
+{
+    <div class="alert alert-@ClassName" role="alert">
+        <h4 class="alert-heading">@HeadingText</h4>
+        <p>
+            <strong>Employee Name</strong> @RequestModel.Employee.Firstname @RequestModel.Employee.Lastname
+        </p>
+        <hr />
+        <p>Requested Date - @RequestModel.DateRequest</p>
+    </div>
+
+    <div>
+        <hr />
+
+        <dl class="row">
+            <dt class="col-sm-2">
+                Start Date
+            </dt>
+            <dd class="col-sm-10">
+                @RequestModel.StartDate
+            </dd>
+            <dt class="col-sm-2">
+                End Date
+            </dt>
+            <dd class="col-sm-10">
+                @RequestModel.EndDate
+            </dd>
+            <dt class="col-sm-2">
+                Leave Type
+            </dt>
+            <dd class="col-sm-10">
+                @RequestModel.LeaveType.Name
+            </dd>
+            <dt class="col-sm-2">
+                Request Comments
+            </dt>
+            <dd class="col-sm-10">
+                @RequestModel.RequestComments
+            </dd>
+        </dl>
+    </div>
+
+    <div>
+        @if (RequestModel.Approved is null)
+        {
+            <button class="btn btn-success" @onclick="(() => ChangeApproval(true))">Approve</button>
+            <button class="btn btn-danger m-2" @onclick="(() => ChangeApproval(false))">Reject</button>
+        }
+
+        <BackToList Target="leaverequests/" />
+    </div>
+}
 
 @code {
 

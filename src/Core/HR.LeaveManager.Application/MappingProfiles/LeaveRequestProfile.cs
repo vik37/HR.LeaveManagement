@@ -12,8 +12,11 @@ public class LeaveRequestProfile : Profile
 	public LeaveRequestProfile()
 	{
 		CreateMap<LeaveRequestListDto, LeaveRequest>()
+			.ForMember(src => src.LeaveType, dest => dest.MapFrom(x => x.LeaveTypeDto))
+			.ForMember(src => src.Approved, dest => dest.MapFrom(x => x.Approval)).ReverseMap();
+		CreateMap<LeaveRequestDetailsDto, LeaveRequest>()
+			.ForMember(src => src.DateRequested, dest => dest.MapFrom(x => x.DateTimeRequested))
 			.ForMember(src => src.LeaveType, dest => dest.MapFrom(x => x.LeaveTypeDto)).ReverseMap();
-		CreateMap<LeaveRequestDetailsDto, LeaveRequest>().ReverseMap();
 		CreateMap<CreateLeaveRequestCommand, LeaveRequest>();
 		CreateMap<UpdateLeaveRequestCommand, LeaveRequest>();
 	}

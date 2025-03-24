@@ -36,9 +36,10 @@ public class LeaveRequestService : BaseHttpService, ILeaveRequestService
 		throw new NotImplementedException();
 	}
 
-	public Task<LeaveRequestVM> GetLeaveRequest(int id)
+	public async Task<LeaveRequestVM> GetLeaveRequest(int id)
 	{
-		throw new NotImplementedException();
+		var leaveRequest = await _client.LeaveRequestGETAsync(id);
+		return _mapper.Map<LeaveRequestVM>(leaveRequest);
 	}
 
 	public async Task<Response<Guid>> CreateLeaveRequest(LeaveRequestVM request)
@@ -57,7 +58,23 @@ public class LeaveRequestService : BaseHttpService, ILeaveRequestService
 		}
 	}
 
-	public Task ApproveLeaveRequest(int id, bool approval)
+	public async Task<Response<Guid>> ApproveLeaveRequest(int id, bool approval)
+	{
+		try
+		{
+			var response = new Response<Guid>();
+			var request = new ChangeLeaveRequestApprovalCommand { Approved = approval, Id = id };
+			await _client.UpdateAppruvalAsync(id, request);
+			return response;
+		}
+		catch (ApiException ex)
+		{
+			return ConvertApiExceptions(ex);
+		}
+		
+	}
+
+	public Task<Response<Guid>> CancleLeaveRequest(int id)
 	{
 		throw new NotImplementedException();
 	}
