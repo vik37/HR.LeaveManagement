@@ -70,7 +70,7 @@ namespace HR.LeaveManagement.Api.Controllers
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesDefaultResponseType]
-		public async Task<ActionResult> CancelRequest(int id, [FromBody] CancelLeaveRequestCommand command)
+		public async Task<ActionResult> CancelRequest([FromBody] CancelLeaveRequestCommand command)
 		{
 			await _mediator.Send(command);
 			return NoContent();
@@ -82,7 +82,7 @@ namespace HR.LeaveManagement.Api.Controllers
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesDefaultResponseType]
-		public async Task<ActionResult> Put(int id, [FromBody] ChangeLeaveRequestApprovalCommand command)
+		public async Task<ActionResult> Put([FromBody] ChangeLeaveRequestApprovalCommand command)
 		{
 			await _mediator.Send(command);
 			return NoContent();

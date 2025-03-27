@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Blazored.LocalStorage;
 using HR.LeaveManagement.UI.BlazorUI.Contracts;
+using HR.LeaveManagement.UI.BlazorUI.Models.LeaveAllocations;
 using HR.LeaveManagement.UI.BlazorUI.Models.LeaveRequests;
 using HR.LeaveManagement.UI.BlazorUI.Services.Base;
 
@@ -31,9 +32,16 @@ public class LeaveRequestService : BaseHttpService, ILeaveRequestService
 		return model;	
 	}
 
-	public Task<EmployeeLeaveRequestVM> GetEmployeeLeaveRequestList()
+	public async Task<EmployeeLeaveRequestVM> GetEmployeeLeaveRequestList()
 	{
-		throw new NotImplementedException();
+		var leaveRequests = await _client.LeaveRequestAllAsync(isLoggedInUser: true);
+		var allocations = await _client.LeaveAllocationAllAsync(isLoggedInUser: true);
+		var model = new EmployeeLeaveRequestVM
+		{
+			LeaveAllocationVMs = _mapper.Map<List<LeaveAllocationVM>>(allocations),
+			LeaveRequestVMs = _mapper.Map<List<LeaveRequestVM>>(leaveRequests)
+		};
+		return model;
 	}
 
 	public async Task<LeaveRequestVM> GetLeaveRequest(int id)
@@ -64,7 +72,7 @@ public class LeaveRequestService : BaseHttpService, ILeaveRequestService
 		{
 			var response = new Response<Guid>();
 			var request = new ChangeLeaveRequestApprovalCommand { Approved = approval, Id = id };
-			await _client.UpdateAppruvalAsync(id, request);
+			await _client.UpdateAppruvalAsync(request);
 			return response;
 		}
 		catch (ApiException ex)
@@ -74,9 +82,19 @@ public class LeaveRequestService : BaseHttpService, ILeaveRequestService
 		
 	}
 
-	public Task<Response<Guid>> CancleLeaveRequest(int id)
+	public async Task<Response<Guid>> CancleLeaveRequest(int id)
 	{
-		throw new NotImplementedException();
+		try
+		{
+			var response = new Response<Guid>();
+			var request = new CancelLeaveRequestCommand { Id = id };
+			await _client.CancelRequestAsync(request);
+			return response;
+		}
+		catch (ApiException ex)
+		{
+			return ConvertApiExceptions(ex);
+		}
 	}
 
 	public Task DeleteLeaveRequest(int id)
