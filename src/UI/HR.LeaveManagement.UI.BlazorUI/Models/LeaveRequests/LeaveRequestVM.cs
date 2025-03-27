@@ -16,7 +16,7 @@ namespace HR.LeaveManagement.UI.BlazorUI.Models.LeaveRequests
 		[Display(Name = "Approval State")]
 		public bool? Approved { get; set; }
 
-		public bool Cancelled { get; set; }
+		public bool? Cancelled { get; set; }
 		public LeaveTypeVM LeaveType { get; set; } = new();
 		public EmployeeVM Employee { get; set; } = new();
 

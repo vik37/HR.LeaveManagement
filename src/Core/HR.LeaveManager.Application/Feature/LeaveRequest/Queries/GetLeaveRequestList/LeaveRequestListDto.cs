@@ -13,4 +13,5 @@ public class LeaveRequestListDto
 	public DateTime StartDate { get; set; }
 	public DateTime EndDate { get; set; }
 	public bool? Approval { get; set; }
+	public bool? Cancelled { get; set; }
 }

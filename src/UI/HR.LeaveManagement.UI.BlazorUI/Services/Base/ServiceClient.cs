@@ -45,12 +45,12 @@ namespace HR.LeaveManagement.UI.BlazorUI.Services.Base
 
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<LeaveAllocationDto>> LeaveAllocationAllAsync();
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<LeaveAllocationDto>> LeaveAllocationAllAsync(bool? isLoggedInUser);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<LeaveAllocationDto>> LeaveAllocationAllAsync(System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<LeaveAllocationDto>> LeaveAllocationAllAsync(bool? isLoggedInUser, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -135,21 +135,21 @@ namespace HR.LeaveManagement.UI.BlazorUI.Services.Base
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task CancelRequestAsync(int? id, CancelLeaveRequestCommand body);
+        System.Threading.Tasks.Task CancelRequestAsync(CancelLeaveRequestCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task CancelRequestAsync(int? id, CancelLeaveRequestCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task CancelRequestAsync(CancelLeaveRequestCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task UpdateAppruvalAsync(int? id, ChangeLeaveRequestApprovalCommand body);
+        System.Threading.Tasks.Task UpdateAppruvalAsync(ChangeLeaveRequestApprovalCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task UpdateAppruvalAsync(int? id, ChangeLeaveRequestApprovalCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task UpdateAppruvalAsync(ChangeLeaveRequestApprovalCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -396,15 +396,15 @@ namespace HR.LeaveManagement.UI.BlazorUI.Services.Base
 
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<LeaveAllocationDto>> LeaveAllocationAllAsync()
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<LeaveAllocationDto>> LeaveAllocationAllAsync(bool? isLoggedInUser)
         {
-            return LeaveAllocationAllAsync(System.Threading.CancellationToken.None);
+            return LeaveAllocationAllAsync(isLoggedInUser, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<LeaveAllocationDto>> LeaveAllocationAllAsync(System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<LeaveAllocationDto>> LeaveAllocationAllAsync(bool? isLoggedInUser, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -419,6 +419,12 @@ namespace HR.LeaveManagement.UI.BlazorUI.Services.Base
                 
                     // Operation Path: "api/LeaveAllocation"
                     urlBuilder_.Append("api/LeaveAllocation");
+                    urlBuilder_.Append('?');
+                    if (isLoggedInUser != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("isLoggedInUser")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(isLoggedInUser, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    urlBuilder_.Length--;
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -1302,15 +1308,15 @@ namespace HR.LeaveManagement.UI.BlazorUI.Services.Base
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task CancelRequestAsync(int? id, CancelLeaveRequestCommand body)
+        public virtual System.Threading.Tasks.Task CancelRequestAsync(CancelLeaveRequestCommand body)
         {
-            return CancelRequestAsync(id, body, System.Threading.CancellationToken.None);
+            return CancelRequestAsync(body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task CancelRequestAsync(int? id, CancelLeaveRequestCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task CancelRequestAsync(CancelLeaveRequestCommand body, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1328,12 +1334,6 @@ namespace HR.LeaveManagement.UI.BlazorUI.Services.Base
                 
                     // Operation Path: "api/LeaveRequest/CancelRequest"
                     urlBuilder_.Append("api/LeaveRequest/CancelRequest");
-                    urlBuilder_.Append('?');
-                    if (id != null)
-                    {
-                        urlBuilder_.Append(System.Uri.EscapeDataString("id")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
-                    }
-                    urlBuilder_.Length--;
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -1408,15 +1408,15 @@ namespace HR.LeaveManagement.UI.BlazorUI.Services.Base
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task UpdateAppruvalAsync(int? id, ChangeLeaveRequestApprovalCommand body)
+        public virtual System.Threading.Tasks.Task UpdateAppruvalAsync(ChangeLeaveRequestApprovalCommand body)
         {
-            return UpdateAppruvalAsync(id, body, System.Threading.CancellationToken.None);
+            return UpdateAppruvalAsync(body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task UpdateAppruvalAsync(int? id, ChangeLeaveRequestApprovalCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task UpdateAppruvalAsync(ChangeLeaveRequestApprovalCommand body, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1434,12 +1434,6 @@ namespace HR.LeaveManagement.UI.BlazorUI.Services.Base
                 
                     // Operation Path: "api/LeaveRequest/UpdateAppruval"
                     urlBuilder_.Append("api/LeaveRequest/UpdateAppruval");
-                    urlBuilder_.Append('?');
-                    if (id != null)
-                    {
-                        urlBuilder_.Append(System.Uri.EscapeDataString("id")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
-                    }
-                    urlBuilder_.Length--;
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -2262,7 +2256,7 @@ namespace HR.LeaveManagement.UI.BlazorUI.Services.Base
         public bool? Approved { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("cancelled")]
-        public bool Cancelled { get; set; }
+        public bool? Cancelled { get; set; }
 
     }
 
@@ -2293,6 +2287,9 @@ namespace HR.LeaveManagement.UI.BlazorUI.Services.Base
 
         [System.Text.Json.Serialization.JsonPropertyName("approval")]
         public bool? Approval { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("cancelled")]
+        public bool? Cancelled { get; set; }
 
     }
 

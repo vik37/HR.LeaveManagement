@@ -27,7 +27,7 @@ public class GetLeaveRequestListQueryHandler : IRequestHandler<GetLeaveRequestLi
 		if (request.IsLoggedInUser)
 		{
 			var userId = _userService.UserId;
-			leaveRequests = await _leaveRequestRepository.GetLeaveRequestWithDetails(userId);
+			leaveRequests = await _leaveRequestRepository.GetLeaveRequestWithDetails(userId ?? string.Empty);
 
 			var employee = await _userService.GetEmployeeById(userId ?? string.Empty);
 			requests = _mapper.Map<List<LeaveRequestListDto>>(leaveRequests);
