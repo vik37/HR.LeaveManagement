@@ -2,4 +2,4 @@
 
 namespace HR.LeaveManager.Application.Feature.LeaveAllocation.Queries.GetLeaveAllocations;
 
-public record GetLeaveAllocationListQuery : IRequest<List<LeaveAllocationDto>>;
+public record GetLeaveAllocationListQuery(bool IsLoggedInUser) : IRequest<List<LeaveAllocationDto>>;

@@ -28,7 +28,7 @@ namespace HR.LeaveManagement.Api.Controllers
 
         // GET api/<LeaveTypeController>/5
         [HttpGet("{id}")]
-        public async Task<LeaveTypeDetailsDto> Get(int id)
+        public async Task<LeaveTypeDetailsDto> Get([FromRoute] int id)
            => await _mediator.Send(new GetLeaveTypeDetailsQuery(id));
 
         // POST api/<LeaveTypeController>
@@ -48,7 +48,7 @@ namespace HR.LeaveManagement.Api.Controllers
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
-		public async Task<IActionResult> Put(int id, [FromBody] UpdateLeaveTypeCommand command)
+		public async Task<IActionResult> Put([FromRoute] int id, [FromBody] UpdateLeaveTypeCommand command)
         {
             await _mediator.Send(command);
             return NoContent();
@@ -59,7 +59,7 @@ namespace HR.LeaveManagement.Api.Controllers
 		[ProducesResponseType(StatusCodes.Status204NoContent)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesDefaultResponseType]
-		public async Task<IActionResult> Delete(int id)
+		public async Task<IActionResult> Delete([FromRoute] int id)
         {
             var command = new DeleteLeaveTypeCommaind() { Id = id };
             await _mediator.Send(command);

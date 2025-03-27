@@ -21,16 +21,16 @@ namespace HR.LeaveManagement.Api.Controllers
 
 		// GET: api/<LeaveAllocationController>
 		[HttpGet]
-        public async Task<ActionResult<List<LeaveAllocationDto>>> Get()
+        public async Task<ActionResult<List<LeaveAllocationDto>>> Get([FromQuery] bool isLoggedInUser = false)
         {
-            var leaveAllocations = await _mediator.Send(new GetLeaveAllocationListQuery());
+            var leaveAllocations = await _mediator.Send(new GetLeaveAllocationListQuery(isLoggedInUser));
 
             return Ok(leaveAllocations);
         }
 
         // GET api/<LeaveAllocationController>/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<LeaveAllocationDetailsDto>> Get(int id)
+        public async Task<ActionResult<LeaveAllocationDetailsDto>> Get([FromRoute] int id)
         {
             var leaveAllocationDetails = await _mediator.Send(new LeaveAllocationDelailsQuery(id));
 
@@ -45,7 +45,7 @@ namespace HR.LeaveManagement.Api.Controllers
 		public async Task<ActionResult> Post([FromBody] CreateLeaveAllocationCommand command)
         {
             var response = await _mediator.Send(command);
-            return CreatedAtAction(nameof(Get), new { Id = response });
+            return Ok();
         }
 
         // PUT api/<LeaveAllocationController>/5
@@ -54,7 +54,7 @@ namespace HR.LeaveManagement.Api.Controllers
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesDefaultResponseType]
-		public async Task<ActionResult> Put(int id, [FromBody]UpdateLeaveAllocationCommand command)
+		public async Task<ActionResult> Put([FromRoute] int id, [FromBody ]UpdateLeaveAllocationCommand command)
         {
 			var response = await _mediator.Send(command);
 			return NoContent();
@@ -65,7 +65,7 @@ namespace HR.LeaveManagement.Api.Controllers
 		[ProducesResponseType(StatusCodes.Status204NoContent)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesDefaultResponseType]
-		public async Task<ActionResult> Delete(int id)
+		public async Task<ActionResult> Delete([FromRoute] int id)
         {
             await _mediator.Send(new DeleteLeaveAllocationCommand { Id = id });
             return NoContent();

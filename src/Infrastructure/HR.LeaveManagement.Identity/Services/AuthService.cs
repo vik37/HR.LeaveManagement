@@ -73,7 +73,7 @@ public class AuthService : IAuthService
 				issuer: _jwtSettings.Issue,
 				audience: _jwtSettings.Audience,
 				claims: claims,
-				expires: DateTime.Now.AddMinutes(_jwtSettings.DurationInMinutes),
+				expires: DateTime.UtcNow.AddMinutes(_jwtSettings.DurationInMinutes),
 				signingCredentials: signinCredentials
 			);
 	}
@@ -91,7 +91,7 @@ public class AuthService : IAuthService
 
 		var result = await _userManager.CreateAsync(user, request.Password);
 
-		if (result.Succeeded)
+		if (!result.Succeeded)
 		{
 			StringBuilder sb = new StringBuilder();
 
@@ -101,7 +101,6 @@ public class AuthService : IAuthService
 			throw new BadRequestException($"{sb}");
 		}
 			
-
 		await _userManager.AddToRoleAsync(user, "Employee");
 		return new RegisterReponse() { UserId = user.Id };
 	}

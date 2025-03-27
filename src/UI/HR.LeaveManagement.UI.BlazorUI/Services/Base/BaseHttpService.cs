@@ -1,7 +1,6 @@
 ﻿using Blazored.LocalStorage;
 using HR.LeaveManagement.UI.BlazorUI.Services.Base;
 using System.Net;
-using System.Net.Http.Headers;
 
 public class BaseHttpService
 {
@@ -25,12 +24,5 @@ public class BaseHttpService
 			default:
 				return new Response<Guid> { Message = "Something went wrong, please try again later", Success = false };
 		}
-	}
-
-	protected async Task AddBearerToken()
-	{
-		if (await _localStorageService.ContainKeyAsync("token"))
-			_client.HttpClient.DefaultRequestHeaders.Authorization =
-				new AuthenticationHeaderValue("Bearer", await _localStorageService.GetItemAsync<string>("token"));
 	}
 }
