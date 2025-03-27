@@ -1,0 +1,71 @@
+﻿@page "/leaverequests/employeeindex/"
+
+<h3>Leave Requests</h3>
+
+@if (loaded)
+{
+    @if (!string.IsNullOrEmpty(Message))
+    {
+        <div class="alert-danger">
+            @Message
+        </div>
+    }
+
+    <h1>Leave Request Log</h1>
+    <hr />
+    <table id="tblData" class="table">
+        <thead>
+            <tr>
+                <th>Employee Name</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Leave Type</th>
+                <th>Requested Date</th>
+                <th>Approval Status</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var request in EmployeeVM.LeaveRequestVMs)
+            {
+                <tr>
+                    <td>@request.Employee.Firstname @request.Employee.Lastname</td>
+                    <td>@request.StartDate.ToShortDateString()</td>
+                    <td>@request.EndDate.ToShortDateString()</td>
+                    <td>@request.LeaveType.Name</td>
+                    <td>@request.DateRequest.ToShortDateString()</td>
+                    <td>
+                        @if (request.Cancelled == true)
+                        {
+                            <span class="badge bg-secondary">Cancelled</span>
+                        }
+                        else if (request.Approved == true)
+                        {
+                            <span class="badge bg-success">Approved</span>
+                        }
+                        else if (request.Approved == false)
+                        {
+                            <span class="badge bg-danger">Rejected</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-warning">Pending</span>
+                        }
+                    </td>
+                    <td>
+                        @if (request.Cancelled == false)
+                        {
+                            <button class="btn btn-outline-danger" @onclick="(() =>CancleLeaveRequest(request.Id))">
+                                <span class="p-1"><i class="bi bi-file-earmark-fill"></i> <b>Cancle Request</b></span>
+                            </button>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <Loader />
+}

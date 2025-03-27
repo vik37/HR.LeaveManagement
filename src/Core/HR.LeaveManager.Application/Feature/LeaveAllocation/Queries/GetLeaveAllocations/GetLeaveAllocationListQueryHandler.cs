@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HR.LeaveManager.Application.Contracts.Identity;
 using HR.LeaveManager.Application.Contracts.Persistence;
 using MediatR;
 
@@ -8,18 +9,25 @@ public class GetLeaveAllocationListQueryHandler : IRequestHandler<GetLeaveAlloca
 {
 	private readonly ILeaveAllocationRepository _leaveAllocationRepository;
 	private readonly IMapper _mapper;
+	private readonly IUserService _userService;
 
-	public GetLeaveAllocationListQueryHandler(ILeaveAllocationRepository leaveAllocationRepository, IMapper mapper)
+	public GetLeaveAllocationListQueryHandler(ILeaveAllocationRepository leaveAllocationRepository,
+		IUserService userService, IMapper mapper)
 	{
 		_leaveAllocationRepository = leaveAllocationRepository;
 		_mapper = mapper;
+		_userService = userService;
 	}
 
 	public async Task<List<LeaveAllocationDto>> Handle(GetLeaveAllocationListQuery request, CancellationToken cancellationToken)
 	{
-		var leaveAllocations = await _leaveAllocationRepository.GetAsynt();
-		var allocations = _mapper.Map<List<LeaveAllocationDto>>(leaveAllocations);
+		if (request.IsLoggedInUser)
+		{
+			var leaveAllocationUserDetails = await _leaveAllocationRepository.GetLeaveAllocationWithDetails(_userService.UserId??string.Empty);
+			return _mapper.Map<List<LeaveAllocationDto>>(leaveAllocationUserDetails);
+		}
 
-		return allocations;
+		var leaveAllocations = await _leaveAllocationRepository.GetAsynt();
+		return _mapper.Map<List<LeaveAllocationDto>>(leaveAllocations);
 	}
 }

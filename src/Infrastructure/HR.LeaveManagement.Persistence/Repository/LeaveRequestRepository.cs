@@ -11,19 +11,20 @@ public class LeaveRequestRepository : GenericRepository<LeaveRequest>, ILeaveReq
 	{
 	}
 
-	public async Task<LeaveRequest?> GetLeaveRequestWithDetails(int id)
-	{
-		var leaveRequest = await _dbContext.LeaveRequests
-											.Include(q => q.LeaveType)
-											.FirstOrDefaultAsync(q => q.Id == id);
-		return leaveRequest;
-	}
-
 	public async Task<List<LeaveRequest>> GetLeaveRequestWithDetails()
 	{
 		var leaveRequest = await _dbContext.LeaveRequests
+											.Where(q => !string.IsNullOrEmpty(q.RequestingEmployeeId))
 											.Include(q => q.LeaveType)
 											.ToListAsync();
+		return leaveRequest;
+	}
+
+	public async Task<LeaveRequest?> GetLeaveRequestWithDetails(int id)
+	{
+		var leaveRequest = await _dbContext.LeaveRequests								
+											.Include(q => q.LeaveType)
+											.FirstOrDefaultAsync(q => q.Id == id);
 		return leaveRequest;
 	}
 
