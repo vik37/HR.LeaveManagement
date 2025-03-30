@@ -42,7 +42,10 @@ namespace HR.LeaveManagement.UI.BlazorUI.Pages.LeaveTypes
 		{
 			var response = await LeaveTypeService.DeleteLeaveType(id);
 			if (response.Success)
+			{
+				LeaveTypes = LeaveTypes.Where(x => x.Id != id).ToList();
 				StateHasChanged();
+			}
 			else
 				Message = response.Message;
 		}

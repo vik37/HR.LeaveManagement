@@ -12,7 +12,7 @@ public class LeaveTypeProfile : Profile
 	public LeaveTypeProfile()
 	{
 		CreateMap<LeaveTypeDto, LeaveType>().ReverseMap();
-		CreateMap<LeaveType, LeaveTypeDetailsDto>();
+		CreateMap<LeaveType, LeaveTypeDetailsDto>().ReverseMap();
 		CreateMap<CreateLeaveTypeCommand, LeaveType>();
 		CreateMap<UpdateLeaveTypeCommand, LeaveType>();
 	}

@@ -22,10 +22,16 @@ public class LeaveTypeService : BaseHttpService, ILeaveTypeService
 		return _mapper.Map<List<LeaveTypeVM>>(leaveTypes);
 	}
 
-	public async Task<LeaveTypeVM> GetLeaveTypeDetails(int id)
+	public async Task<LeaveTypeVM> GetLeaveType(int id)
+	{
+		var leaveType = await _client.LeaveTypeGETAsync(id);
+		return _mapper.Map<LeaveTypeVM>(leaveType);
+	}
+
+	public async Task<LeaveTypeDetailVM> GetLeaveTypeDetails(int id)
 	{
 		var leaveTypeDetails = await _client.LeaveTypeGETAsync(id);
-		return _mapper.Map<LeaveTypeVM>(leaveTypeDetails);
+		return _mapper.Map<LeaveTypeDetailVM>(leaveTypeDetails);
 	}
 
 	public async Task<Response<Guid>> CreateLeaveType(LeaveTypeVM model)
@@ -47,7 +53,7 @@ public class LeaveTypeService : BaseHttpService, ILeaveTypeService
 		try
 		{
 			var updateLeaveTypeCommand = _mapper.Map<UpdateLeaveTypeCommand>(model);
-			await _client.LeaveTypePUTAsync(model.Id, updateLeaveTypeCommand);
+			await _client.LeaveTypePUTAsync(updateLeaveTypeCommand);
 			return new Response<Guid>();
 		}
 		catch (ApiException ex)
