@@ -12,6 +12,18 @@ public class MappingProfile : Profile
 	public MappingProfile()
 	{
 		CreateMap<LeaveTypeDto, LeaveTypeVM>().ReverseMap();
+		CreateMap<LeaveTypeDetailsDto, LeaveTypeDetailVM>()
+			.ForMember(q => q.DateCreated, opt => opt.MapFrom(x => x.DateCreated.DateTime))
+			.ForMember(q => q.DateModified, opt => opt.MapFrom(x => x.DateModified.DateTime))
+			.ReverseMap()
+			.ForMember(q => q.DateCreated, opt => opt.MapFrom(x => new DateTimeOffset(x.DateCreated)))
+			.ForMember(q => q.DateModified, opt => opt.MapFrom(x => new DateTimeOffset(x.DateModified)));
+
+		CreateMap<LeaveTypeDetailsDto, LeaveTypeVM>()
+			.ReverseMap()
+			.ForMember(q => q.DateCreated, opt => opt.Ignore())
+			.ForMember(q => q.DateModified, opt => opt.Ignore());
+
 		CreateMap<CreateLeaveTypeCommand,LeaveTypeVM>().ReverseMap();
 		CreateMap<UpdateLeaveTypeCommand, LeaveTypeVM>().ReverseMap();
 
