@@ -43,12 +43,12 @@ namespace HR.LeaveManagement.Api.Controllers
         }
 
         // PUT api/<LeaveTypeController>/5
-        [HttpPut("{id}")]
+        [HttpPut]
 		[ProducesResponseType(StatusCodes.Status204NoContent)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
-		public async Task<IActionResult> Put([FromRoute] int id, [FromBody] UpdateLeaveTypeCommand command)
+		public async Task<IActionResult> Put([FromBody] UpdateLeaveTypeCommand command)
         {
             await _mediator.Send(command);
             return NoContent();

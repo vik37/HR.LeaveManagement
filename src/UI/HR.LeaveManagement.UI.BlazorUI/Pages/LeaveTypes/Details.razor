@@ -1,0 +1,33 @@
+﻿@page "/leavetypes/details/{id:int}"
+@attribute [Authorize(Roles = "Administrator")]
+
+<h3>Details</h3>
+
+<br />
+<hr />
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="card">
+            <div class="card-header custom-style">
+                <h4>HR Leave Type - @LeaveTypeDetailVM.Name</h4>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Default Days: @LeaveTypeDetailVM.DefaultDays Days</h5>
+                <p class="card-text"><b>HR Leave Type was created:</b> <i>@LeaveTypeDetailVM.DateCreated.ToString("yyyy-MM-dd")</i></p>
+                <hr />
+                <p class="card-text"><b>Last time modify:</b> <i>@LeaveTypeDetailVM.DateCreated.ToString("yyyy-MM-dd")</i></p>
+                <button class="btn btn-primary" @onclick="@(() => UpdateLeaveType(LeaveTypeDetailVM.Id))">Edit</button>
+            </div>
+        </div>
+        <BackToList Target="leavetypes" />
+    </div>
+</div>
+
+<style>
+    .custom-style {
+        background-color: rgb(15, 43, 102);
+        color: rgb(255, 255, 255);
+        font-family: 'Times New Roman', Times, serif;
+    }
+</style>
