@@ -5,10 +5,15 @@ using Newtonsoft.Json.Serialization;
 using HR.LeaveManagement.Api.Middleware;
 using HR.LeaveManagement.Identity;
 using Microsoft.OpenApi.Models;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Host.UseSerilog((context,loggingConf) => 
+                        loggingConf.WriteTo.Console()
+                                    .ReadFrom.Configuration(context.Configuration));
 
 builder.Services.AddHttpContextAccessor();
 
@@ -70,6 +75,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseSerilogRequestLogging();
 
 app.UseHttpsRedirection();
 
