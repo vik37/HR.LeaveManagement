@@ -1,4 +1,5 @@
-﻿using HR.LeaveManagement.UI.BlazorUI.Contracts;
+﻿using Blazored.Toast.Services;
+using HR.LeaveManagement.UI.BlazorUI.Contracts;
 using HR.LeaveManagement.UI.BlazorUI.Models.LeaveTypes;
 using Microsoft.AspNetCore.Components;
 
@@ -11,6 +12,9 @@ namespace HR.LeaveManagement.UI.BlazorUI.Pages.LeaveTypes
 
 		[Inject]
 		ILeaveTypeService LeaveTypeService { get; set; }
+
+		[Inject]
+		IToastService ToastService { get; set; }
 
 		[Parameter]
 		public int Id { get; set; }
@@ -30,9 +34,12 @@ namespace HR.LeaveManagement.UI.BlazorUI.Pages.LeaveTypes
 
 			if (response.Success)
 			{
+				ToastService.ShowSuccess("Leave Type was Changed Successfully");
 				NavigationManager.NavigateTo("/leavetypes/");
 				return;
 			}
+
+			ToastService.ShowError("Invalid data in the fields");
 			Message = response.Message;
 		}
 	}

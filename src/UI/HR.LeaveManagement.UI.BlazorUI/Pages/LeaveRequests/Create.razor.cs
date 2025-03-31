@@ -1,8 +1,8 @@
-﻿using HR.LeaveManagement.UI.BlazorUI.Contracts;
+﻿using Blazored.Toast.Services;
+using HR.LeaveManagement.UI.BlazorUI.Contracts;
 using HR.LeaveManagement.UI.BlazorUI.Models.LeaveRequests;
 using HR.LeaveManagement.UI.BlazorUI.Models.LeaveTypes;
 using Microsoft.AspNetCore.Components;
-using System.Threading.Tasks;
 
 namespace HR.LeaveManagement.UI.BlazorUI.Pages.LeaveRequests
 {
@@ -16,6 +16,9 @@ namespace HR.LeaveManagement.UI.BlazorUI.Pages.LeaveRequests
 
 		[Inject]
 		NavigationManager NavigationManager { get; set; }
+
+		[Inject]
+		IToastService ToastService { get; set; }
 
 		LeaveRequestVM LeaveRequest { get; set; } = new LeaveRequestVM();
 
@@ -31,6 +34,7 @@ namespace HR.LeaveManagement.UI.BlazorUI.Pages.LeaveRequests
 		private async Task HandleValidSubmit()
 		{
 			await LeaveRequestService.CreateLeaveRequest(LeaveRequest);
+			ToastService.ShowSuccess("Leave Request Created Successfully");
 			NavigationManager.NavigateTo("/leaverequests/");
 		}
 	}
