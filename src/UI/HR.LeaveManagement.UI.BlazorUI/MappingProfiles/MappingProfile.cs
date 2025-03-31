@@ -21,6 +21,8 @@ public class MappingProfile : Profile
 
 		CreateMap<LeaveTypeDetailsDto, LeaveTypeVM>()
 			.ReverseMap()
+			.ForMember(q => q.CreatedBy, opt => opt.Ignore())
+			.ForMember(q => q.ModifiedBy, opt => opt.Ignore())
 			.ForMember(q => q.DateCreated, opt => opt.Ignore())
 			.ForMember(q => q.DateModified, opt => opt.Ignore());
 
