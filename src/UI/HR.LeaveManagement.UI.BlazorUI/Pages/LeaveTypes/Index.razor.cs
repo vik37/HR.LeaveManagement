@@ -1,3 +1,4 @@
+using Blazored.Toast.Services;
 using HR.LeaveManagement.UI.BlazorUI.Contracts;
 using HR.LeaveManagement.UI.BlazorUI.Models.LeaveTypes;
 using Microsoft.AspNetCore.Components;
@@ -14,6 +15,9 @@ namespace HR.LeaveManagement.UI.BlazorUI.Pages.LeaveTypes
 
 		[Inject]
 		private ILeaveAllocationService LeaveAllocationService { get; set; }
+
+		[Inject]
+		IToastService ToastService { get; set; }
 
 		public List<LeaveTypeVM>? LeaveTypes { get; private set; }
 		public string Message { get; set; } = string.Empty;
@@ -43,6 +47,7 @@ namespace HR.LeaveManagement.UI.BlazorUI.Pages.LeaveTypes
 			var response = await LeaveTypeService.DeleteLeaveType(id);
 			if (response.Success)
 			{
+				ToastService.ShowSuccess("Leave Type was Deleted Successfully");
 				LeaveTypes = LeaveTypes.Where(x => x.Id != id).ToList();
 				StateHasChanged();
 			}
