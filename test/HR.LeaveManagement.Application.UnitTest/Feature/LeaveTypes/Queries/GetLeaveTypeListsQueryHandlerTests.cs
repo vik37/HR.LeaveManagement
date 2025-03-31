@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
-using Castle.Core.Logging;
 using HR.LeaveManagement.Application.UnitTest.Mocs;
+using HR.LeaveManager.Application.Contracts.Identity;
 using HR.LeaveManager.Application.Contracts.Logging;
 using HR.LeaveManager.Application.Contracts.Persistence;
 using HR.LeaveManager.Application.Feature.LeaveType.Queries.GetAllLeaveTypes;
-using HR.LeaveManager.Application.Feature.LeaveType.Queries.GetLeaveTypeDetail;
 using HR.LeaveManager.Application.MappingProfiles;
 using Moq;
 using Shouldly;
@@ -33,11 +32,11 @@ public class GetLeaveTypeListsQueryHandlerTests
 	[Fact]
 	public async Task GetLeaveTypeListTest()
 	{
-		var handler = new GetLeaveTypesQueryHandler(_mapper,_mockRepo.Object,_appLogger.Object);
+		var handler = new GetLeaveTypesQueryHandler(_mapper,_mockRepo.Object, _appLogger.Object);
 
 		var result = await handler.Handle(new GetLeaveTypesQuery(), CancellationToken.None);
 
 		result.ShouldBeOfType<List<LeaveTypeDto>>();
-		result.Count.ShouldBe(3);
+		result.Count.ShouldBe(4);
 	}
 }

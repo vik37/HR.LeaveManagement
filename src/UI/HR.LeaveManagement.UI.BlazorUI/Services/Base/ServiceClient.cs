@@ -2305,8 +2305,14 @@ namespace HR.LeaveManagement.UI.BlazorUI.Services.Base
         [System.Text.Json.Serialization.JsonPropertyName("dateCreated")]
         public System.DateTimeOffset DateCreated { get; set; }
 
+        [System.Text.Json.Serialization.JsonPropertyName("createdBy")]
+        public string CreatedBy { get; set; }
+
         [System.Text.Json.Serialization.JsonPropertyName("dateModified")]
         public System.DateTimeOffset DateModified { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("modifiedBy")]
+        public string ModifiedBy { get; set; }
 
     }
 

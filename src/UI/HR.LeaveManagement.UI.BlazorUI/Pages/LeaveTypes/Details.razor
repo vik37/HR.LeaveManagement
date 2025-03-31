@@ -15,8 +15,16 @@
             <div class="card-body">
                 <h5 class="card-title">Default Days: @LeaveTypeDetailVM.DefaultDays Days</h5>
                 <p class="card-text"><b>HR Leave Type was created:</b> <i>@LeaveTypeDetailVM.DateCreated.ToString("yyyy-MM-dd")</i></p>
+                @if (!string.IsNullOrEmpty(LeaveTypeDetailVM.CreatedBy))
+                {
+                    <p class="card-text"><b>Created By:</b> <i>@LeaveTypeDetailVM.CreatedBy</i></p>
+                }
                 <hr />
-                <p class="card-text"><b>Last time modify:</b> <i>@LeaveTypeDetailVM.DateCreated.ToString("yyyy-MM-dd")</i></p>
+                <p class="card-text"><b>Last time modify:</b> <i>@LeaveTypeDetailVM.DateModified.ToString("yyyy-MM-dd")</i></p>
+                @if (!string.IsNullOrEmpty(LeaveTypeDetailVM.ModifiedBy))
+                {
+                    <p class="card-text"><b>Modified By:</b> <i>@LeaveTypeDetailVM.ModifiedBy</i></p>
+                }
                 <button class="btn btn-primary" @onclick="@(() => UpdateLeaveType(LeaveTypeDetailVM.Id))">Edit</button>
             </div>
         </div>
