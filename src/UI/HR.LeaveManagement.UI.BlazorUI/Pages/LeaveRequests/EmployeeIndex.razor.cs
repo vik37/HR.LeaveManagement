@@ -1,4 +1,5 @@
-﻿using HR.LeaveManagement.UI.BlazorUI.Contracts;
+﻿using Blazored.Toast.Services;
+using HR.LeaveManagement.UI.BlazorUI.Contracts;
 using HR.LeaveManagement.UI.BlazorUI.Models.LeaveRequests;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
@@ -11,7 +12,7 @@ namespace HR.LeaveManagement.UI.BlazorUI.Pages.LeaveRequests
 		ILeaveRequestService LeaveRequestService { get; set; }
 
 		[Inject]
-		NavigationManager NavigationManager { get; set; }
+		IToastService ToastService { get; set; }
 
 		[Inject]
 		IJSRuntime js { get; set; }
@@ -37,6 +38,7 @@ namespace HR.LeaveManagement.UI.BlazorUI.Pages.LeaveRequests
 			{
 				if (response.Success)
 				{
+					ToastService.ShowSuccess("Leave Request Cancelled Successfully");
 					StateHasChanged();
 					return;
 				}

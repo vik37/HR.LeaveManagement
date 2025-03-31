@@ -28,6 +28,13 @@ public class MockLeaveTypeRepository
 				Id = 3,
 				Name = "Test Maternity",
 				DefaultDays = 15
+			},
+			new LeaveType
+			{
+				Id = 4,
+				Name = "Sick Leave",
+				CreatedBy = MockUserService.UserId,
+				ModifiedBy = MockUserService.UserId
 			}
 		};
 
@@ -41,6 +48,8 @@ public class MockLeaveTypeRepository
 			.Returns((LeaveType leaveType) =>
 			{
 				leaveType.Id = leaveTypes.Count+1;
+				leaveType.DateCreated = DateTime.Now;
+				leaveType.CreatedBy = MockUserService.UserId;
 				leaveTypes.Add(leaveType);
 				return Task.CompletedTask;
 			});

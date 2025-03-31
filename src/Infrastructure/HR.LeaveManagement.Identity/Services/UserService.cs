@@ -23,6 +23,12 @@ public class UserService : IUserService
 	public string? UserId { get => _contextAccessor.HttpContext is not null ?
 			_contextAccessor.HttpContext?.User?.FindFirstValue("uid") : null; }
 
+	public string? Role
+	{
+		get => _contextAccessor.HttpContext is not null ?
+			_contextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.Role) : null;
+	}
+
 	public async Task<List<Employee>> GetAllEmployees()
 	{
 		var employees = await _userManager.GetUsersInRoleAsync("Employee");
