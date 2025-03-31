@@ -11,8 +11,15 @@ public class LeaveTypeProfile : Profile
 {
 	public LeaveTypeProfile()
 	{
-		CreateMap<LeaveTypeDto, LeaveType>().ReverseMap();
-		CreateMap<LeaveType, LeaveTypeDetailsDto>().ReverseMap();
+		CreateMap<LeaveTypeDto, LeaveType>()
+			.ReverseMap();
+		CreateMap<LeaveTypeDetailsDto, LeaveType>()
+			.ForMember(q => q.ModifiedBy, opt => opt.Ignore())
+			.ForMember(q => q.CreatedBy, opt => opt.Ignore())
+			.ReverseMap()
+			.ForMember(q => q.ModifiedBy, opt => opt.Ignore())
+			.ForMember(q => q.CreatedBy, opt => opt.Ignore());
+			
 		CreateMap<CreateLeaveTypeCommand, LeaveType>();
 		CreateMap<UpdateLeaveTypeCommand, LeaveType>();
 	}
