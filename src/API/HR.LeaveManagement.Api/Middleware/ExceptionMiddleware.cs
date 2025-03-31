@@ -8,10 +8,12 @@ namespace HR.LeaveManagement.Api.Middleware;
 public class ExceptionMiddleware
 {
 	private readonly RequestDelegate _next;
+	private readonly ILogger<ExceptionMiddleware> _logger;
 
-	public ExceptionMiddleware(RequestDelegate next)
+	public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
 	{
 		_next = next;
+		_logger = logger;
 	}
 
 	public async Task InvokeAsync(HttpContext context)
@@ -77,7 +79,13 @@ public class ExceptionMiddleware
 
 		context.Response.ContentType = "application/json";
 		context.Response.StatusCode = (int)httpStatusCode;
-		string json = JsonConvert.SerializeObject(problem);
-		await context.Response.WriteAsync(json);
+		string jsonMessage = JsonConvert.SerializeObject(problem);
+
+		if((int)httpStatusCode  >= 400 || (int)httpStatusCode < 500)
+			_logger.LogWarning(jsonMessage);
+		if(((int)httpStatusCode >= 500))
+			_logger.LogError(ex,jsonMessage);
+
+		await context.Response.WriteAsync(jsonMessage);
 	}
 }
