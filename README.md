@@ -27,6 +27,37 @@ HR.LeaveManagement is a leave management system built with **.NET** technologies
 
 This project follows the **Clean Architecture** principles, ensuring separation of concerns and maintainability.
 
+<img alt="clean_diagram.jpg" style="width:250px" src="https://github.com/vik37/HR.LeaveManagement/blob/feature/clean_diagram.jpg?raw=true" data-hpc="true" class="Box-sc-g0xbh4-0 fzFXnm">
+
+**src** :open_file_folder:         
+ ```` API ````:open_file_folder:          
+>    | *HR.Leave.Management.API (.NET Web API)* |
+>    |------------------------------------------|
+         
+```` Core ````:open_file_folder:               
+>    | *HR.Leave.Management.Domain (Domain Entities)* |
+>    |------------------------------------------------|
+>         
+>    | *HR.Leave.Management.Application (Business Logic)* |
+>    |----------------------------------------------------|
+              
+```` Infrastructure (Third-Party Services) ````:open_file_folder:                                  
+>    | *HR.Leave.Management.Identity (User Security)* |
+>    |------------------------------------------------|
+>                 
+>    | *HR.Leave.Management.Infrastructure (Logging Service, Email Service)* |
+>    |-----------------------------------------------------------------------|
+>             
+>    | *HR.Leave.Management.Persistence (Database Access, Repositories, E.F. Migrations)* |
+>    |------------------------------------------------------------------------------------|
+          
+```` UI ````:open_file_folder:                                  
+>    | *HR.Leave.Management.UI (.NET Blazor WebAssembly)* |
+>    |----------------------------------------------------|
+                 
+**Test**:open_file_folder:               
+```` 1. Unit Tests ````:file_folder:                
+```` 2. Integration Tests ````:file_folder:
 
 ## 🛠 Installation & Setup
 ### Prerequisites
