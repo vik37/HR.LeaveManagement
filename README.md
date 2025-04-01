@@ -11,7 +11,7 @@ HR.LeaveManagement is a leave management system built with **.NET** technologies
 - **MSSQL** (Database)
 - **RESTful APIs** (Integration)
 - **Github** (Optional: CI/CD Integration)
-- **Unit & Integration Testing** (XUnit/NUnit)
+- **Unit & Integration Testing** (XUnit)
 - **Git for Version Control**
 
 ## 🔥 Features
