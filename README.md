@@ -7,6 +7,7 @@ HR.LeaveManagement is a leave management system built with **.NET** technologies
 - **.NET 8**
 - **C#** (Backend)
 - **Blazor** (Frontend)
+- **NSwag Studio**
 - **Entity Framework Core** (Database Handling)
 - **MSSQL** (Database)
 - **RESTful APIs** (Integration)
